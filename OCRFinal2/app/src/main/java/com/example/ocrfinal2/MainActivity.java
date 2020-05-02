@@ -44,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
     String storagePermission [];
 
     Uri image_uri;
+    private int requestCode;
+    private int resultCode;
+    @Nullable
+    private Intent data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,11 +205,15 @@ public class MainActivity extends AppCompatActivity {
 
     //handle image Result
 
-    @Override
+
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        this.requestCode = requestCode;
+        this.resultCode = resultCode;
+        this.data = data;
         //got image from camera
 
-        if (requestCode == RESULT_OK) {
+        if (requestCode != RESULT_OK) {
             if (requestCode == IMAGE_PICK_GALLERY_CODE) {
                 //got image from galllery now crop it
                 CropImage.activity(data.getData())
@@ -222,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         //get cropped image
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (requestCode == RESULT_OK) {
+            if (requestCode != RESULT_OK) {
                 Uri resultUri = result.getUri(); // get image uri
                 //set image to image view
                 mPreviewIv.setImageURI(resultUri);
@@ -246,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     //set text to edit text
                     mResultEt.setText(sb.toString());
+                    String tst = sb.toString();
                 }
             } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 //if there is any error show it

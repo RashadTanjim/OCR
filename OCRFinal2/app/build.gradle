@@ -36,5 +36,5 @@ dependencies {
     implementation 'com.android.support:design:29.0.3'
     implementation 'com.google.android.gms:play-services-vision:19.0.0'
     //image crop library
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 }
